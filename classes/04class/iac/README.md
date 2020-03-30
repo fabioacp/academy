@@ -29,7 +29,7 @@ IaC won't replace physical installation (racking and cabling equipments, for exa
 
 As an example, all the configuration that was executed to create the VPC, subnets, routing tables during exercises from class 2 or even configuring ECS during exercises in class 3 could be coded.
 
-With all those manual steps in a code format, it would be possible to create those resources multiple in a matter of minutes, instead of going into multiple clicks in the AWS console.
+With all those manual steps in a code format, it would be possible to create those resources multiple times in a matter of minutes, instead of going into multiple clicks in the AWS console.
 
 ### Benefits of IaC
 The benefits of IaC are normally around three pillars:
@@ -62,7 +62,7 @@ In the pull method, the resource being managed by the IaC tool will pull the too
 In the push method, the resource being managed stays in a `sleep mode`, and the communication is initiated by the IaC tool. In that case, the tool will push the desired state to the resource being managed and the resource will converge to the desired state (again, either through imperative or declarative model).
 
 ## Terraform Foundation
-[Terraform](https://www.terraform.io/) is one of the main IaC tools available, and it uses a Declarative model with a push method. It can be used to manage resources in multiple cloud providers(including AWS, Azure and GCP) as well as manage resources in on-premises(like in VMware and Openshift).
+[Terraform](https://www.terraform.io/) is one of the main IaC tools available, and it uses a Declarative model with a push method. It can be used to manage resources in multiple cloud providers(including AWS, Azure and GCP) as well as manage resources on-premises(like in VMware and Openshift).
 
 It's a powerful tool that can be used to create, maintain and delete entire IT environments. This material will focus on how to use Terraform to manage AWS resources.
 
