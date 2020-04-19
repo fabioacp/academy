@@ -1,5 +1,7 @@
-# Class 06
+# Class 05
 
 ## Agenda
 
- WIP
+ - [Lambda Functions](/classes/06class/lambda/README.md)
+ 
+## [Exercises](/classes/06class/exercises/README.md)
