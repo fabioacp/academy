@@ -37,9 +37,7 @@ aws lambda invoke --function-name my-function --payload '{ "key": "value" }' res
 }
 ```
 
-This mode is normally used to test a function, but in a daily basis, this is not the most common way to consume this service.
-
-In the Asynchronous mode, the Lambda Function is normally invoked by an event on the AWS ecosystem. An event like a new file in a S3 bucket, a new update on your dynamodb or new data being loaded in Kinesis are good examples of asynchronous Lambda invocation. 
+In the Asynchronous mode, the Lambda Function is normally invoked by an event in the AWS ecosystem. An event like a new file in a S3 bucket, a new update on your dynamodb or new new message ina SQS queue are good examples of asynchronous Lambda invocation. 
 
 In this mode, the Lambda is invoked similar to the synchronous mode, but in this case, there is no wait for the Lambda response. For this kind of invocation, Lambda places the event in a queue and only returns a success reponse without any additional information.
 
@@ -56,9 +54,27 @@ More details around those two types of invocation can be found [here](https://do
 
 ## Event Sources
 
-There is multiple events that can be used to invoke a Lambda Function. 
+There are multiple events that can be used to invoke a Lambda Function. Common event sources are S3 events (like a new file upload), a new message in a SNS Topic, a new message in a SQS queue, API Gateway requests and DynamoDB events(like new item), but there are many more. [Here](https://docs.aws.amazon.com/lambda/latest/dg/lambda-services.html) you can find a list of AWS services that integrates with Lambda with examples.
+
+A Lambda can have one or more events configured to trigger it. Once the event happens, the function is executed.
 
 ## Execution Role
 
+Because the Lambda Function may need to interact with other AWS services, like createing a file in S3, interacting with DynamoDB or even logging the execution, it's possible to configure a role to be used by the Lambda during it's execution.
+
+This role is similar any other role in AWS and is created throught the IAM and policies attached to it. A single Execution Role can be attached to a Lambda Function, so make sure that all permissions that will be required by the Lambda to successfully interact with AWS services are included in the Role configured in the Function.
+
 ## Common Use Cases
 
+Lambda Functions can be used for pretty much anything. From executing a daily job in your AWS Account, like shutting down instances that do not have a specific tag, to run an entire website, Lambda Function is one of the most powerfull services provided by AWS.
+
+Some of the most common use cases are described below:
+
+- Real Time Data Processing
+    - Use AWS Lambda to thumbnail images, transcode videos, index files, process logs, validate content, and aggregate and filter data in real-time.
+- Real Time Data Streaming
+    - Use AWS Lambda and Amazon Kinesis to process real-time streaming data for application activity tracking, transaction order processing, click stream analysis, data cleansing, metrics generation, log filtering, indexing, social media analysis, and IoT device data telemetry and metering
+- Web Applications
+    - Use AWS Lambda with other AWS services to build powerful web applications that automatically scale up and down and run in a highly available configuration across multiple data centers 
+- Operations Tasks
+    - Use AWS Lambda to automate common task to manage your AWS environment, like cleaning up unused EIP or EBS volumes or shutting down resources that were not created with the right tags.
