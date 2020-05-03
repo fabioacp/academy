@@ -6,7 +6,6 @@
   - [API types](#api-types)
   - [HTTP API](#http-api)
   - [REST API](#rest-api)
-  - [Choosing between AWS HTTP API and REST API](#choosing-between-aws-http-api-and-rest-api)
   - [Main building blocks](#main-building-blocks)
     - [Resources](#resources)
     - [Methods](#methods)
@@ -14,7 +13,10 @@
     - [Stages](#stages)
     - [Lambda function integration](#lambda-function-integration)
   - [Securing your APIs](#securing-your-apis)
-  - [References](#references)
+  - [Other features](#other-features)
+  - [Appendix](#appendix)
+    - [Choosing between AWS HTTP API and REST API](#choosing-between-aws-http-api-and-rest-api)
+    - [References](#references)
 
 
 ## What is an API Gateway?
@@ -57,11 +59,6 @@ HTTP APIs support **OpenID Connect** and **OAuth 2.0** authorization. They come 
 A REST API in API Gateway is a collection of **resources** and **methods** that are integrated with backend HTTP endpoints, Lambda functions, or other AWS services. 
 
 API Gateway REST APIs use a **request/response model** where a client sends a request to a service and the service responds back **synchronously**. This kind of model is suitable for many different kinds of applications that depend on synchronous communication.
-
-## Choosing between AWS HTTP API and REST API
-
-https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-vs-rest.html
-
 
 ## Main building blocks
 
@@ -119,27 +116,42 @@ In `Lambda proxy integration`, the setup is simple. If your API does not require
 
 In `Lambda non-proxy integration`, in addition to the proxy integration setup steps, you also specify how the incoming request data is mapped to the integration request and how the resulting integration response data is mapped to the method response.
 
+![](./assets/apigw_lambda_integration.png)
+
+Check [this tutorial](https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html) on how to set up a proxy Lambda integration.
+
 ## Securing your APIs
 
-For Authentication and Authorization you can use:
+To control how clients call an API, use IAM permissions, a Lambda authorizer, or an Amazon Cognito user pool. 
 
-- **Custom Authorizers**
-  - **Cognito User Pool**: you can configure a pool of users associated with this API.
-  - **Lambda**: You can have a Lambda running to validate if the requester is authorised to call the API endpoint.
+- **Cognito User Pool**: you can configure a pool of users associated with this API.
+- **Lambda authorizer**: You can have a Lambda running to validate if the requester is authorised to call the API endpoint.
+- **IAM permissions**: if using a role to access the API.
 
 For distributing your API, the access control can be:
 - **Open to the world:** Don’t add any authorization or authentication requirements. Any user can invoke your function with an HTTP call.
-- **IAM**: Use IAM permissions to authorize access to your API. Users are required to include authentication signatures in their HTTP calls.
-- **API Keys**: Simple method of granting access to clients
+- **IAM**: Use IAM permissions to authorize access to your API. Users are required to include authentication signatures ([sigv4 signing](https://docs.aws.amazon.com/general/latest/gr/sigv4_signing.html) - not so cool steps to get the signing key) in their HTTP calls.
+- **API Keys**: Simple method of granting access to clients. 
+  To set up API keys, do the following:
 
-To set up API keys, do the following:
+  1. Define an usage plan for the stage `X`.
+  2. Create or import an API key for the API in a region and associate it to the usage plan.
+  3. Configure API methods to require an API key.
+  4. Deploy the API in the stage `X`.
 
-1. Define an usage plan for the stage `X`.
-2. Create or import an API key for the API in a region and associate it to the usage plan.
-3. Configure API methods to require an API key.
-4. Deploy the API in the stage `X`.
+## Other features
+- [Caching](https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-caching.html)
+- [Canary Deployment support](https://docs.aws.amazon.com/apigateway/latest/developerguide/canary-release.html)
+- [OAuth 2.0 via Cognito]() and [OICD](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_create_oidc.html) authentication
+- [Data encryption](https://docs.aws.amazon.com/apigateway/latest/developerguide/data-protection-encryption.html) in transit and at rest.
+- [Security best practices](https://docs.aws.amazon.com/apigateway/latest/developerguide/security-best-practices.html)
 
+## Appendix
 
-## References
+### Choosing between AWS HTTP API and REST API
+
+https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-vs-rest.html
+
+### References
 
 - [Tutorial: Build a Hello World REST API with Lambda proxy integration](https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-create-api-as-simple-proxy-for-lambda.html)
