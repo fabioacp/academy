@@ -1,3 +1,6 @@
+application:
+    - application/*
+    
 class01:
     - classes/01class/**/*
 
