@@ -22,9 +22,6 @@ class07:
 class08:
     - classes/08class/**/*
     
-application:
-    - application/*
-    
 ready to review:
     - classes/**/*
     - projects/**/*
